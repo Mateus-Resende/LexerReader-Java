@@ -27,7 +27,7 @@ public class TokenReader {
                     if (c.equals('$')) {
                         state = 1;
                         pos++;
-                    } else if ("0123456789".contains(c.toString())) {
+                    } else if ('0123456789'.contains(c.toString())) {
                         state = 4;
                         pos++;
                     } else if ("+=-&%/|".contains(c.toString())) {
@@ -73,30 +73,30 @@ public class TokenReader {
 
                     
 
-                    while ("0123456789".contains(c.toString())) {
+                    while ('0123456789'.contains(c.toString())) {
                     	state = 4;
                         pos++;
                     } 
-                    if (character.isDigit(",")){
+                    if (character.isDigit(',')){
                     	state = 5;
                     	pos++;
-                    } else if (character.isLetter)
+                    } //else if (character.isLetter)
                      
                 	
                     	break;
 
                 case 5:
-                    while ("0123456789".contains(c.toString())) {
+                    while ('0123456789'.contains(c.toString())) {
                 	   state = 6;
                 	   pos++;
                     }	
-                    //add operetor
-                    state = 0;
-                    
                     break;
 
                 case 6:
-                    break;
+                	results.add("NumReal")
+                    state = 0;
+                	pos++;
+                	break;
 
                 case 7:
                     break;
