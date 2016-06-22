@@ -29,7 +29,15 @@ public class TokenReader {
                     break;
                 case 3:
                     break;
-                case 4:
+                case 4: 
+                		if(Character.isDigit(c)){
+                			state = 4;
+                			//results.add(Token.NumInt);
+                		} else if (c.equals("")){
+                			state = 0;
+                		}else if (c.equals(",")){
+                			state = 5;
+                		}
                     break;
                 case 5:
                     break;
@@ -42,6 +50,7 @@ public class TokenReader {
                 case 9:
                     break;
                 case 10:
+                		if(Character.)
                     break;
                 case 11:
                     break;
