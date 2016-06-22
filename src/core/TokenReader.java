@@ -22,7 +22,10 @@ public class TokenReader {
             Character c = input.charAt(pos);
             switch (state) {
                 case 0:
-                    break;
+                	if(c.equals("+")||c.equals("=")||c.equals("-")||c.equals("&")||c.equals("%")||c.equals("/")||c.equals("|")){
+                        state = 10;
+                	}
+                	break;
                 case 1:
                     break;
                 case 2:
@@ -42,6 +45,8 @@ public class TokenReader {
                 case 9:
                     break;
                 case 10:
+                	 //add operador
+                    state = 0;
                     break;
                 case 11:
                     break;
