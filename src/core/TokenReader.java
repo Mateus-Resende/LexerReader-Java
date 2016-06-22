@@ -27,8 +27,17 @@ public class TokenReader {
                     if (c.equals('$')) {
                         state = 1;
                         pos++;
+
+                    } else if ("+=-&%/|".contains(c.toString())) {
+                        state = 10;
+                        pos++;
+                	} else if (c.equals('*')) {
+                        state = 11;
+                        pos++;
+                    } else {
+                        pos++;
                     }
-                    break;
+                	break;
 
                 case 1:
                     if (Character.isLetter(c) || c.equals("_")) {
@@ -49,7 +58,7 @@ public class TokenReader {
                     break;
 
                 case 3:
-                    if (Character.isDigit(c) || Character.isLetter(c) || c.equals("_")) {
+                    if (Character.isDigit(c) || Character.isLetter(c) || c.equals('_')) {
                         state = 3;
                         pos++;
                     } else {
@@ -77,9 +86,24 @@ public class TokenReader {
                     break;
 
                 case 10:
+                    results.add("Op");
+                    state = 0;
+                    pos++;
                     break;
 
                 case 11:
+                    if (pos + 1 < input.length()) {
+                        Character cNext = input.charAt(pos + 1);
+                        if (cNext.equals('*')) {
+                            state = 0;
+                            pos += 2;
+                            results.add("Op");
+                        }
+                    } else {
+                        state = 0;
+                        pos++;
+                        results.add("Op");
+                    }
                     break;
 
                 case 12:
