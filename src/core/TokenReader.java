@@ -34,7 +34,11 @@ public class TokenReader {
                 	} else if (c.equals('*')) {
                         state = 11;
                         pos++;
-                    } else {
+                    } else if(c.equals('"')){
+                    	state = 8;
+                    	pos++;
+                    	
+                    }else {
                         pos++;
                     }
                 	break;
@@ -80,6 +84,18 @@ public class TokenReader {
                     break;
 
                 case 8:
+                	if (!c.equals('"')){
+                		state = 8;
+                		pos++;
+                	}else if (c.equals('"')){
+                		results.add("Cadeia");
+                		state = 0;
+                		pos++;
+                	}else{
+                		//implementar o erro
+                		pos++;
+                		System.out.println("Erro de saida de String");                		
+                	}
                     break;
 
                 case 9:
@@ -98,7 +114,10 @@ public class TokenReader {
                             state = 0;
                             pos += 2;
                             results.add("Op");
-                        }
+                        } else{
+                        	state=0;
+                        	pos++;
+                         }
                     } else {
                         state = 0;
                         pos++;
