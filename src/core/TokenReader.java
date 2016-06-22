@@ -40,7 +40,7 @@ public class TokenReader {
                 	break;
 
                 case 1:
-                    if (Character.isLetter(c) || c.equals("_")) {
+                    if (Character.isLetter(c)) {
                         state = 2;
                         pos++;
                     } else {

@@ -14,7 +14,6 @@
 		<state id="2" name="2 id">
 			<x>376.0</x>
 			<y>8.0</y>
-			<final/>
 		</state>
 		<state id="3" name="3 id">
 			<x>613.0</x>
@@ -67,8 +66,15 @@
 		<!--The list of transitions.-->
 		<transition>
 			<from>0</from>
-			<to>1</to>
-			<read>$</read>
+			<to>10</to>
+			<controlx>154</controlx>
+			<controly>267</controly>
+			<read>+=-&amp;%/|</read>
+		</transition>
+		<transition>
+			<from>4</from>
+			<to>5</to>
+			<read>virgula</read>
 		</transition>
 		<transition>
 			<from>4</from>
@@ -76,35 +82,16 @@
 			<read>A+B+C+D+E+F</read>
 		</transition>
 		<transition>
-			<from>7</from>
-			<to>7</to>
-			<controlx>665</controlx>
-			<controly>123</controly>
-			<read>digito+A+B+C+D+E+F</read>
-		</transition>
-		<transition>
 			<from>0</from>
 			<to>4</to>
 			<read>digito</read>
 		</transition>
 		<transition>
-			<from>3</from>
-			<to>3</to>
-			<read>letra+_+digito</read>
-		</transition>
-		<transition>
-			<from>1</from>
-			<to>2</to>
-			<controlx>297</controlx>
-			<controly>-22</controly>
-			<read>letra+_</read>
-		</transition>
-		<transition>
-			<from>2</from>
-			<to>3</to>
-			<controlx>486</controlx>
-			<controly>-14</controly>
-			<read>letra+digito+_</read>
+			<from>7</from>
+			<to>7</to>
+			<controlx>665</controlx>
+			<controly>123</controly>
+			<read>digito+A+B+C+D+E+F</read>
 		</transition>
 		<transition>
 			<from>5</from>
@@ -117,13 +104,25 @@
 			<read>"</read>
 		</transition>
 		<transition>
+			<from>3</from>
+			<to>3</to>
+			<read>letra+_+digito</read>
+		</transition>
+		<transition>
 			<from>0</from>
-			<to>8</to>
-			<read>"</read>
+			<to>1</to>
+			<read>$</read>
 		</transition>
 		<transition>
 			<from>11</from>
 			<to>12</to>
+			<read>*</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>11</to>
+			<controlx>86</controlx>
+			<controly>320</controly>
 			<read>*</read>
 		</transition>
 		<transition>
@@ -132,16 +131,16 @@
 			<read>char</read>
 		</transition>
 		<transition>
-			<from>4</from>
-			<to>5</to>
-			<read>virgula</read>
+			<from>2</from>
+			<to>3</to>
+			<controlx>486</controlx>
+			<controly>-14</controly>
+			<read>letra+digito+_</read>
 		</transition>
 		<transition>
 			<from>0</from>
-			<to>11</to>
-			<controlx>86</controlx>
-			<controly>320</controly>
-			<read>*</read>
+			<to>8</to>
+			<read>"</read>
 		</transition>
 		<transition>
 			<from>4</from>
@@ -154,11 +153,9 @@
 			<read>digito</read>
 		</transition>
 		<transition>
-			<from>0</from>
-			<to>10</to>
-			<controlx>154</controlx>
-			<controly>267</controly>
-			<read>+=-&amp;%/|</read>
+			<from>1</from>
+			<to>2</to>
+			<read>letra</read>
 		</transition>
 	</automaton>
 </structure>
