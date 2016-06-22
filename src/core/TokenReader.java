@@ -3,64 +3,93 @@ package core;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by mresende on 21/06/16.
- */
 public class TokenReader {
 
-    private List<Token> results = null;
+    private List<String> results = null;
 
     public TokenReader() {
-        results = new ArrayList<Token>();
+        results = new ArrayList<String>();
     }
 
     public String read(String input) {
         int pos = 0;
         int state = 0;
-        
-        while(input.length() < pos ) {
+        input += " ";
+
+        while(input.length() > pos ) {
             Character c = input.charAt(pos);
+            System.out.println("Read input at " + pos + ": " + c);
+
             switch (state) {
+
                 case 0:
+                    System.out.println("state 0");
+                    if (c.equals('$')) {
+                        state = 1;
+                        pos++;
+                    }
                     break;
+
                 case 1:
+                    if (Character.isLetter(c) || c.equals("_")) {
+                        state = 2;
+                        pos++;
+                    } else {
+                        state = 13;
+                    }
                     break;
+
                 case 2:
+                    if (Character.isLetter(c) || Character.isDigit(c) || c.equals('_')) {
+                        state = 3;
+                        pos++;
+                    } else {
+                        state = 13;
+                    }
                     break;
+
                 case 3:
+                    if (Character.isDigit(c) || Character.isLetter(c) || c.equals("_")) {
+                        state = 3;
+                        pos++;
+                    } else {
+                        results.add("ID");
+                        state = 0;
+                        pos++;
+                    }
                     break;
-                case 4: 
-                		if(Character.isDigit(c)){
-                			state = 4;
-                			//results.add(Token.NumInt);
-                		} else if (c.equals("")){
-                			state = 0;
-                		}else if (c.equals(",")){
-                			state = 5;
-                		}
+                case 4:
                     break;
+
                 case 5:
                     break;
+
                 case 6:
                     break;
+
                 case 7:
                     break;
+
                 case 8:
                     break;
+
                 case 9:
                     break;
+
                 case 10:
-                		if(Character.)
                     break;
+
                 case 11:
                     break;
+
                 case 12:
                     break;
+
                 default:
-                    break;
+                    return "Error on position: " + pos;
             }
-            pos++;
         }
-        return null;
+
+        return results.toString();
     }
 }
