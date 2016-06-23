@@ -18,7 +18,7 @@ public class TokenTests {
 
     @Test
     public void testIdWithUnderscore() throws Exception {
-        String expected = "ID";
+        String expected = "[ID]";
         String actual = t.read("$a_bc");
 
         assertEquals(expected, actual);
@@ -26,7 +26,7 @@ public class TokenTests {
 
     @Test
     public void testIdWithoutUnderscore() throws Exception {
-        String expected = "ID";
+        String expected = "[ID]";
         String actual = t.read("$abc");
 
         assertEquals(expected, actual);
@@ -52,7 +52,7 @@ public class TokenTests {
 
     @Test
     public void testTwoIdsWithUnderscore() throws Exception {
-        String expected = "ID ID";
+        String expected = "[ID, ID]";
         String actual = t.read("$oiu_ $p_bc");
 
         assertEquals(expected, actual);
@@ -60,7 +60,7 @@ public class TokenTests {
 
     @Test
     public void testTwoInts() throws Exception {
-        String expected = "NumInt NumInt";
+        String expected = "[NumInt, NumInt]";
         String actual = t.read("987234526235623462317895672 2");
 
         assertEquals(expected, actual);
@@ -68,7 +68,7 @@ public class TokenTests {
 
     @Test
     public void testSingleInt() throws Exception {
-        String expected = "NumInt";
+        String expected = "[NumInt]";
         String actual = t.read("34716987654987324698");
 
         assertEquals(expected, actual);
@@ -96,7 +96,7 @@ public class TokenTests {
 
     @Test
     public void testReal() throws Exception {
-        String expected = "NumReal";
+        String expected = "[NumReal]";
         String actual = t.read("657987,6432");
 
         assertEquals(expected, actual);
@@ -104,7 +104,7 @@ public class TokenTests {
 
     @Test
     public void testReal2() throws Exception {
-        String expected = "NumReal";
+        String expected = "[NumReal]";
         String actual = t.read("657987,6");
 
         assertEquals(expected, actual);
@@ -112,7 +112,7 @@ public class TokenTests {
 
     @Test
     public void testReal3() throws CharacterNotMappedException, StringNotClosedException {
-        String expected = "NumReal";
+        String expected = "[NumReal]";
         String actual = t.read("6,6432");
 
         assertEquals(expected, actual);
@@ -120,7 +120,7 @@ public class TokenTests {
 
     @Test
     public void testHexaBeginsWithDigit() throws CharacterNotMappedException, StringNotClosedException {
-        String expected = "NumHexa";
+        String expected = "[NumHex]";
         String actual = t.read("4203C0B092");
 
         assertEquals(expected, actual);
@@ -128,7 +128,7 @@ public class TokenTests {
 
     @Test
     public void testHexaBeginsWithLetter() throws CharacterNotMappedException, StringNotClosedException {
-        String expected = "NumHexa";
+        String expected = "[NumHex]";
         String actual = t.read("A42E030B092");
 
         assertEquals(expected, actual);
@@ -183,7 +183,7 @@ public class TokenTests {
 
     @Test
     public void testOperator() throws CharacterNotMappedException, StringNotClosedException {
-        String expected = "Op";
+        String expected = "[]";
         String actual = t.read("\"");
 
         assertEquals(expected, actual);

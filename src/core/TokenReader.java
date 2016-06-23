@@ -41,7 +41,6 @@ public class TokenReader {
                     } else {
                         throw new CharacterNotMappedException(pos);
                     }
-                    pos++;
                     break;
 
                 case 1:
