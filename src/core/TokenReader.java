@@ -176,7 +176,7 @@ public class TokenReader {
 	}
 	
 	public boolean isOperator(Character c) {
-		return ("+-*/%&|=").contains(c.toString());
+		return ("+-/%&|=").contains(c.toString());
 	}
 	
 	public boolean isHexadecimal(Character c) {
