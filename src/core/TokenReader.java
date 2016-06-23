@@ -2,16 +2,19 @@ package core;
 
 import java.util.ArrayList;
 import java.util.List;
+import Exceptions.CharacterNotMappedException;
+import Exceptions.StringNotClosedException;
+
 
 public class TokenReader {
 
     private List<String> results = null;
 
-    public TokenReader() {
+    public TokenReader() throws Exception{
         results = new ArrayList<String>();
     }
 
-    public String read(String input) {
+    public String read(String input) throws Exception {
         int pos = 0;
         int state = 0;
         input += " ";
@@ -37,7 +40,7 @@ public class TokenReader {
                         state = 8;
                         pos++;
                     } else {
-                        pos++;
+                    	throw new CharacterNotMappedException(pos);
                     }
                     pos++;
                     break;
@@ -47,15 +50,16 @@ public class TokenReader {
                         state = 2;
                         pos++;
                     } else {
-                        state = 13;
+                    	throw new CharacterNotMappedException(pos);
                     }
+                    pos++;
                     break;
 
                 case 2:
                     if (Character.isLetter(c) || Character.isDigit(c) || c.equals('_')) {
                         state = 3;
                     } else {
-                        state = 13;
+                        throw new CharacterNotMappedException(pos);
                     }
                     pos++;
 
@@ -64,9 +68,11 @@ public class TokenReader {
                 case 3:
                     if (Character.isDigit(c) || Character.isLetter(c) || c.equals('_')) {
                         state = 3;
-                    } else {
+                    } else if (!("+=-&%/|".contains(c.toString()))){
                         results.add("ID");
                         state = 0;
+                    }else{
+                    	throw new CharacterNotMappedException(pos);
                     }
                     pos++;
                     break;
@@ -82,7 +88,7 @@ public class TokenReader {
                         results.add("NumInt");
                         state = 0;
                     } else {
-                        state = 13;
+                    	throw new CharacterNotMappedException(pos);
                     }
                     pos++;
                     break;
@@ -91,7 +97,7 @@ public class TokenReader {
                     if (Character.isDigit(c)) {
                         state = 6;
                     } else {
-                        state = 13;
+                    	throw new CharacterNotMappedException(pos);
                     }
                     pos++;
 
@@ -100,9 +106,11 @@ public class TokenReader {
                 case 6:
                     if (Character.isDigit(c)) {
                         state = 6;
-                    } else {
+                    } else if (c.equals(" ")){
                         results.add("NumReal");
                         state = 0;
+                    }else {
+                    	throw new CharacterNotMappedException(pos);             
                     }
                     pos++;
                     break;
@@ -111,13 +119,12 @@ public class TokenReader {
                     if ("ABCDEF".contains(c.toString()) || Character.isDigit(c)) {
                         state = 7;
                         pos++;
-                    } else if (c.equals(' ')) {
+                    } else if (c.equals(" ")) {
                         results.add("NumHex");
                         state = 0;
                         pos++;
                     } else {
-                        //implementar erro
-                        pos++;
+                    	throw new CharacterNotMappedException(pos);
                     }
                     break;
 
@@ -125,13 +132,9 @@ public class TokenReader {
                     if (!c.equals('"')) {
                         state = 8;
                         pos++;
-                    } else if (c.equals('"')) {
-                    	state = 9;
                     } else {
-                        //implementar o erro
-                        pos++;
-                        System.out.println("Erro de saida de String");
-                    }
+                    	state = 9;
+                    } 
                     break;
 
                 case 9:
@@ -139,6 +142,8 @@ public class TokenReader {
 	                    results.add("Cadeia");
 	                    state = 0;
 	                    pos++;
+                	} else {
+                		throw new StringNotClosedException(pos);
                 	}
                     break;
 
@@ -167,7 +172,7 @@ public class TokenReader {
                     break;
 
                 default:
-                    return "Error on position: " + pos;
+                	throw new CharacterNotMappedException(pos);
             }
         }
 
