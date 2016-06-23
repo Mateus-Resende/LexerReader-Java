@@ -126,9 +126,7 @@ public class TokenReader {
                         state = 8;
                         pos++;
                     } else if (c.equals('"')) {
-                        results.add("Cadeia");
-                        state = 0;
-                        pos++;
+                    	state = 9;
                     } else {
                         //implementar o erro
                         pos++;
@@ -137,6 +135,11 @@ public class TokenReader {
                     break;
 
                 case 9:
+                	if (c.equals('"')){
+	                    results.add("Cadeia");
+	                    state = 0;
+	                    pos++;
+                	}
                     break;
 
                 case 10:
