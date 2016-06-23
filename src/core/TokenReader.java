@@ -81,7 +81,7 @@ public class TokenReader {
                     break;
 
                 case 7:
-                	if ("ABCDEF".contains(c.toString())){
+                	if ("ABCDEF".contains(c.toString()) || Character.isDigit(c)){
                 		state = 7;
                 	 	pos++; 
                 	}else if (c.equals(" ")){
