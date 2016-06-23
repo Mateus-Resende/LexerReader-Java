@@ -44,7 +44,7 @@ public class TokenTests {
 
     @Test
     public void testIdEndsWithUnderscore() throws Exception {
-        String expected = "ID";
+        String expected = "[ID]";
         String actual = t.read("$a_");
 
         assertEquals(expected, actual);
@@ -136,7 +136,7 @@ public class TokenTests {
 
     @Test
     public void testHexaSingleLetter() throws CharacterNotMappedException, StringNotClosedException {
-        String expected = "NumHexa";
+        String expected = "[NumHex]";
         String actual = t.read("A");
 
         assertEquals(expected, actual);
@@ -149,7 +149,7 @@ public class TokenTests {
 
     @Test
     public void testEmptyString() throws CharacterNotMappedException, StringNotClosedException {
-        String expected = "Cadeia";
+        String expected = "[Cadeia]";
         String actual = t.read("\"\"");
 
         assertEquals(expected, actual);
@@ -157,7 +157,7 @@ public class TokenTests {
 
     @Test
     public void testStringSingleChar() throws CharacterNotMappedException, StringNotClosedException {
-        String expected = "Cadeia";
+        String expected = "[Cadeia]";
         String actual = t.read("\"a\"");
 
         assertEquals(expected, actual);
@@ -165,8 +165,8 @@ public class TokenTests {
 
     @Test
     public void testStringWithSpecialChars() throws CharacterNotMappedException, StringNotClosedException {
-        String expected = "Cadeia";
-        String actual = t.read("\"a945&504-0@as#df*fd%&trht(yhj\\'<>? \"");
+        String expected = "[Cadeia]";
+        String actual = t.read("\"a945&504-0@as#df*fd%&trht(yhj'<>?\"");
 
         assertEquals(expected, actual);
     }
@@ -183,8 +183,8 @@ public class TokenTests {
 
     @Test
     public void testOperator() throws CharacterNotMappedException, StringNotClosedException {
-        String expected = "[]";
-        String actual = t.read("\"");
+        String expected = "[Cadeia, Op]";
+        String actual = t.read("\"blabla2345bla&2398\"*");
 
         assertEquals(expected, actual);
     }

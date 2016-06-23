@@ -6,7 +6,6 @@ import Exceptions.StringNotClosedException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class TokenReader {
 
     private List<String> results = null;
@@ -30,14 +29,14 @@ public class TokenReader {
                         state = 1;
                     } else if ("0123456789".contains(c.toString())) {
                         state = 4;
+                    } else if ("ABCDEF".contains(c.toString())) {
+                        state = 7;
+                    } else if (c.equals('"')) {
+                        state = 8;
                     } else if ("+=-&%/|".contains(c.toString())) {
                         state = 10;
                     } else if (c.equals('*')) {
                         state = 11;
-                        pos++;
-                    } else if (c.equals('"')) {
-                        state = 8;
-                        pos++;
                     } else {
                         throw new CharacterNotMappedException(pos);
                     }
@@ -46,11 +45,9 @@ public class TokenReader {
                 case 1:
                     if (Character.isLetter(c)) {
                         state = 2;
-                        pos++;
                     } else {
                         throw new CharacterNotMappedException(pos);
                     }
-                    pos++;
                     break;
 
                 case 2:
@@ -59,8 +56,6 @@ public class TokenReader {
                     } else {
                         throw new CharacterNotMappedException(pos);
                     }
-                    pos++;
-
                     break;
 
                 case 3:
@@ -72,7 +67,6 @@ public class TokenReader {
                     } else {
                         throw new CharacterNotMappedException(pos);
                     }
-                    pos++;
                     break;
 
                 case 4:
@@ -88,7 +82,6 @@ public class TokenReader {
                     } else {
                         throw new CharacterNotMappedException(pos);
                     }
-                    pos++;
                     break;
 
                 case 5:
@@ -97,8 +90,6 @@ public class TokenReader {
                     } else {
                         throw new CharacterNotMappedException(pos);
                     }
-                    pos++;
-
                     break;
 
                 case 6:
@@ -110,17 +101,14 @@ public class TokenReader {
                     } else {
                         throw new CharacterNotMappedException(pos);
                     }
-                    pos++;
                     break;
 
                 case 7:
                     if ("ABCDEF".contains(c.toString()) || Character.isDigit(c)) {
                         state = 7;
-                        pos++;
                     } else if (c.equals(' ')) {
                         results.add("NumHex");
                         state = 0;
-                        pos++;
                     } else {
                         throw new CharacterNotMappedException(pos);
                     }
@@ -128,8 +116,10 @@ public class TokenReader {
 
                 case 8:
                     if (!c.equals('"')) {
-                        state = 8;
-                        pos++;
+                        if (input.length() > pos + 1) {
+                            throw new StringNotClosedException(pos);
+                        } else
+                            state = 8;
                     } else {
                         state = 9;
                     }
@@ -139,7 +129,6 @@ public class TokenReader {
                     if (c.equals('"')) {
                         results.add("Cadeia");
                         state = 0;
-                        pos++;
                     } else {
                         throw new StringNotClosedException(pos);
                     }
@@ -148,7 +137,6 @@ public class TokenReader {
                 case 10:
                     results.add("Op");
                     state = 0;
-                    pos++;
                     break;
 
                 case 11:
@@ -156,15 +144,13 @@ public class TokenReader {
                         Character cNext = input.charAt(pos + 1);
                         if (cNext.equals('*')) {
                             state = 0;
-                            pos += 2;
+                            pos++;
                             results.add("Op");
                         } else {
                             state = 0;
-                            pos++;
                         }
                     } else {
                         state = 0;
-                        pos++;
                         results.add("Op");
                     }
                     break;
@@ -172,6 +158,7 @@ public class TokenReader {
                 default:
                     throw new CharacterNotMappedException(pos);
             }
+            pos++;
         }
 
         return results.toString();

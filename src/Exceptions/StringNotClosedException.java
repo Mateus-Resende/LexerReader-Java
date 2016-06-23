@@ -1,23 +1,16 @@
 package Exceptions;
 
 public class StringNotClosedException extends Exception {
-	private String CadeiaNaoFechada = "Cadeia Não Fechada!";
+	private String CadeiaNaoFechada = "Cadeia Nao Fechada!";
 	private String msg = null;
-	
-	
-    public StringNotClosedException() {
-        System.out.println("ERRO: ");
-        
-    }
-    
 
     public StringNotClosedException(int Index) {
         super();
-        msg = "Erro encontrado na posição [ " + Index + " ] " + CadeiaNaoFechada;        
+        msg = "Erro encontrado na posicao [ " + Index + " ] " + CadeiaNaoFechada;
     }
-    
-    public String getMessage(String string){
-    	
+
+    @Override
+    public String getMessage(){
     	return msg; 
     }
 	
