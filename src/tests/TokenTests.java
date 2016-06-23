@@ -184,9 +184,45 @@ public class TokenTests {
     @Test
     public void testOperator() throws CharacterNotMappedException, StringNotClosedException {
         String expected = "[Cadeia, Op]";
-        String actual = t.read("\"blabla2345bla&2398\"*");
+        String actual = t.read("\"2398\"*");
+
+        assertEquals(expected, actual);
+    }
+    
+    @Test
+    public void testMultipleTokens() throws CharacterNotMappedException, StringNotClosedException {
+        String expected = "[Cadeia, Op, NumInt, Op, ID, Op, NumHex]";
+        String actual = t.read("\"2398\"*893475 = $abc + B1");
 
         assertEquals(expected, actual);
     }
 
+    @Test(expected = CharacterNotMappedException.class)
+    public void testMultipleTokens2() throws CharacterNotMappedException, StringNotClosedException {
+        t.read("$89");
+    }
+    
+    @Test
+    public void testMultipleStars() throws CharacterNotMappedException, StringNotClosedException {
+    	String expected = "[Op, NumReal, Op]";
+        String actual = t.read("= 5,6**");
+
+        assertEquals(expected, actual);
+    }
+    
+    @Test
+    public void testMultipleTokens3() throws CharacterNotMappedException, StringNotClosedException {
+    	String expected = "[ID, Op, NumReal, Op, NumHex, Op, NumInt, Op, Cadeia, Op, NumInt]";
+        String actual = t.read("$valor = 5,6**          1B + 324 + \"Goku\"%1");
+
+        assertEquals(expected, actual);
+    }
+    
+    @Test
+    public void testMultipleTokens4() throws CharacterNotMappedException, StringNotClosedException {
+    	String expected = "[Op, Cadeia, Op, NumInt]";
+        String actual = t.read("+ \"Goku\"%1");
+
+        assertEquals(expected, actual);
+    }
 }

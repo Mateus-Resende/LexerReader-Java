@@ -8,159 +8,178 @@ import java.util.List;
 
 public class TokenReader {
 
-    private List<String> results = null;
+	private List<String> results = null;
 
-    public TokenReader() {
-        results = new ArrayList<>();
-    }
+	public TokenReader() {
+		results = new ArrayList<>();
+	}
 
-    public String read(String input) throws CharacterNotMappedException, StringNotClosedException {
-        int pos = 0;
-        int state = 0;
-        input += " ";
+	public String read(String input) throws CharacterNotMappedException, StringNotClosedException {
+		int pos = 0;
+		int state = 0;
+		input += " ";
 
-        while (input.length() > pos) {
-            Character c = input.charAt(pos);
+		while (input.length() > pos) {
+			Character c = input.charAt(pos);
 
-            switch (state) {
+			switch (state) {
 
-                case 0:
-                    if (c.equals('$')) {
-                        state = 1;
-                    } else if ("0123456789".contains(c.toString())) {
-                        state = 4;
-                    } else if ("ABCDEF".contains(c.toString())) {
-                        state = 7;
-                    } else if (c.equals('"')) {
-                        state = 8;
-                    } else if ("+=-&%/|".contains(c.toString())) {
-                        state = 10;
-                    } else if (c.equals('*')) {
-                        state = 11;
-                    } else {
-                        throw new CharacterNotMappedException(pos);
-                    }
-                    break;
+			case 0:
+				if (c.equals('$')) {
+					state = 1;
+				} else if ("0123456789".contains(c.toString())) {
+					state = 4;
+				} else if ("ABCDEF".contains(c.toString())) {
+					state = 7;
+				} else if (c.equals('"')) {
+					state = 8;
+				} else if (isOperator(c)) {
+					state = 10;
+				} else if (c.equals('*')) {
+					state = 11;
+				} else if (c.equals(' ')) {
+					state = 0;
+				} else {
+					throw new CharacterNotMappedException(pos);
+				}
+				pos++;
+				break;
 
-                case 1:
-                    if (Character.isLetter(c)) {
-                        state = 2;
-                    } else {
-                        throw new CharacterNotMappedException(pos);
-                    }
-                    break;
+			case 1:
+				if (Character.isLetter(c)) {
+					state = 2;
+				} else {
+					throw new CharacterNotMappedException(pos);
+				}
+				pos++;
+				break;
 
-                case 2:
-                    if (Character.isLetter(c) || Character.isDigit(c) || c.equals('_')) {
-                        state = 3;
-                    } else {
-                        throw new CharacterNotMappedException(pos);
-                    }
-                    break;
+			case 2:
+				if (Character.isLetter(c) || Character.isDigit(c) || c.equals('_')) {
+					state = 3;
+				} else {
+					throw new CharacterNotMappedException(pos);
+				}
+				pos++;
+				break;
 
-                case 3:
-                    if (Character.isDigit(c) || Character.isLetter(c) || c.equals('_')) {
-                        state = 3;
-                    } else if (!("+=-&%/|".contains(c.toString()))) {
-                        results.add("ID");
-                        state = 0;
-                    } else {
-                        throw new CharacterNotMappedException(pos);
-                    }
-                    break;
+			case 3:
+				if (Character.isDigit(c) || Character.isLetter(c) || c.equals('_')) {
+					state = 3;
+				} else if (!(isOperator(c))) {
+					results.add("ID");
+					state = 0;
+				} else {
+					throw new CharacterNotMappedException(pos);
+				}
+				pos++;
+				break;
 
-                case 4:
-                    if (c.equals(',')) {
-                        state = 5;
-                    } else if ("ABCDEF".contains(c.toString())) {
-                        state = 7;
-                    } else if (Character.isDigit(c)) {
-                        state = 4;
-                    } else if (c.equals(' ')) {
-                        results.add("NumInt");
-                        state = 0;
-                    } else {
-                        throw new CharacterNotMappedException(pos);
-                    }
-                    break;
+			case 4:
+				if (c.equals(',')) {
+					state = 5;
+				} else if ("ABCDEF".contains(c.toString())) {
+					state = 7;
+				} else if (Character.isDigit(c)) {
+					state = 4;
+				} else if (c.equals(' ')) {
+					results.add("NumInt");
+					state = 0;
+				} else {
+					throw new CharacterNotMappedException(pos);
+				}
+				pos++;
+				break;
 
-                case 5:
-                    if (Character.isDigit(c)) {
-                        state = 6;
-                    } else {
-                        throw new CharacterNotMappedException(pos);
-                    }
-                    break;
+			case 5:
+				if (Character.isDigit(c)) {
+					state = 6;
+				} else {
+					throw new CharacterNotMappedException(pos);
+				}
+				pos++;
+				break;
 
-                case 6:
-                    if (Character.isDigit(c)) {
-                        state = 6;
-                    } else if (c.equals(' ')) {
-                        results.add("NumReal");
-                        state = 0;
-                    } else {
-                        throw new CharacterNotMappedException(pos);
-                    }
-                    break;
+			case 6:
+				if (Character.isDigit(c)) {
+					state = 6;
+					pos++;
+				} else {
+					results.add("NumReal");
+					state = 0;
+				}
+				break;
 
-                case 7:
-                    if ("ABCDEF".contains(c.toString()) || Character.isDigit(c)) {
-                        state = 7;
-                    } else if (c.equals(' ')) {
-                        results.add("NumHex");
-                        state = 0;
-                    } else {
-                        throw new CharacterNotMappedException(pos);
-                    }
-                    break;
+			case 7:
+				if ("ABCDEF".contains(c.toString()) || Character.isDigit(c)) {
+					state = 7;
+				} else if (c.equals(' ')) {
+					results.add("NumHex");
+					state = 0;
+				} else {
+					throw new CharacterNotMappedException(pos);
+				}
+				pos++;
+				break;
 
-                case 8:
-                    if (!c.equals('"')) {
-                        if (input.length() > pos + 1) {
-                            throw new StringNotClosedException(pos);
-                        } else
-                            state = 8;
-                    } else {
-                        state = 9;
-                    }
-                    break;
+			case 8:
+				if (!c.equals('"') || c.equals(' ')) {
+					if (input.length() <= pos + 1) {
+						throw new StringNotClosedException(pos);
+					} else {
+						state = 8;
+						pos++;
+					}
+				} else {
+					state = 9;
+				}
+				break;
 
-                case 9:
-                    if (c.equals('"')) {
-                        results.add("Cadeia");
-                        state = 0;
-                    } else {
-                        throw new StringNotClosedException(pos);
-                    }
-                    break;
+			case 9:
+				if (c.equals('"')) {
+					results.add("Cadeia");
+					state = 0;
+					pos++;
+				} else {
+					throw new StringNotClosedException(pos);
+				}
+				
+				break;
 
-                case 10:
-                    results.add("Op");
-                    state = 0;
-                    break;
+			case 10:
+				results.add("Op");
+				state = 0;
+				break;
 
-                case 11:
-                    if (pos + 1 < input.length()) {
-                        Character cNext = input.charAt(pos + 1);
-                        if (cNext.equals('*')) {
-                            state = 0;
-                            pos++;
-                            results.add("Op");
-                        } else {
-                            state = 0;
-                        }
-                    } else {
-                        state = 0;
-                        results.add("Op");
-                    }
-                    break;
+			case 11:
+				if (c.equals('*')) {
+					state = 12;
+				} else {
+					results.add("Op");
+					state = 0;
+				}
+				pos++;
+				break;
+				
+			case 12:
+				results.add("Op");
+				state = 0;
+				pos++;
+				break;
 
-                default:
-                    throw new CharacterNotMappedException(pos);
-            }
-            pos++;
-        }
+			default:
+				throw new CharacterNotMappedException(pos);
+			}
+		}
 
-        return results.toString();
-    }
+		return results.toString();
+	}
+	
+	public boolean isOperator(Character c) {
+		return ("+-*/%&|=").contains(c.toString());
+	}
+	
+	public boolean isHexadecimal(Character c) {
+		return ("ABCDEF").contains(c.toString());
+	}
 }
