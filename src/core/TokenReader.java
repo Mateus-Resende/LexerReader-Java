@@ -72,12 +72,12 @@ public class TokenReader {
                     break;
 
                 case 4:
-                    if (c.equals(",")) {
+                    if (c.equals(',')) {
                         state = 5;
                     } else if ("ABCDEF".contains(c.toString())) {
                         state = 7;
                     } else if (Character.isDigit(c)) {
-
+                        state = 4;
                     } else if (c.equals(' ')) {
                         results.add("NumInt");
                         state = 0;
@@ -98,16 +98,20 @@ public class TokenReader {
                     break;
 
                 case 6:
-                    results.add("NumReal");
-                    state = 0;
+                    if (Character.isDigit(c)) {
+                        state = 6;
+                    } else {
+                        results.add("NumReal");
+                        state = 0;
+                    }
                     pos++;
                     break;
 
                 case 7:
-                    if ("ABCDEF".contains(c.toString())) {
+                    if ("ABCDEF".contains(c.toString()) || Character.isDigit(c)) {
                         state = 7;
                         pos++;
-                    } else if (c.equals(" ")) {
+                    } else if (c.equals(' ')) {
                         results.add("NumHex");
                         state = 0;
                         pos++;
@@ -157,9 +161,6 @@ public class TokenReader {
                         pos++;
                         results.add("Op");
                     }
-                    break;
-
-                case 12:
                     break;
 
                 default:
