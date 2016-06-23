@@ -16,7 +16,7 @@ public class TokenReader {
         int state = 0;
         input += " ";
 
-        while(input.length() > pos ) {
+        while (input.length() > pos) {
             Character c = input.charAt(pos);
             System.out.println("Read input at " + pos + ": " + c);
 
@@ -26,20 +26,15 @@ public class TokenReader {
                     System.out.println("state 0");
                     if (c.equals('$')) {
                         state = 1;
-                        pos++;
-                    } else if ('0123456789'.contains(c.toString())) {
+                    } else if ("0123456789".contains(c.toString())) {
                         state = 4;
-                        pos++;
                     } else if ("+=-&%/|".contains(c.toString())) {
                         state = 10;
-                        pos++;
-                	} else if (c.equals('*')) {
+                    } else if (c.equals('*')) {
                         state = 11;
-                        pos++;
-                    } else {
-                        pos++;
                     }
-                	break;
+                    pos++;
+                    break;
 
                 case 1:
                     if (Character.isLetter(c)) {
@@ -53,52 +48,65 @@ public class TokenReader {
                 case 2:
                     if (Character.isLetter(c) || Character.isDigit(c) || c.equals('_')) {
                         state = 3;
-                        pos++;
                     } else {
                         state = 13;
                     }
+                    pos++;
+
                     break;
 
                 case 3:
                     if (Character.isDigit(c) || Character.isLetter(c) || c.equals('_')) {
                         state = 3;
-                        pos++;
                     } else {
                         results.add("ID");
                         state = 0;
-                        pos++;
                     }
+                    pos++;
                     break;
+
                 case 4:
+                    if (c.equals(",")) {
+                        state = 5;
+                    } else if ("ABCDEF".contains(c.toString())) {
+                        state = 7;
+                    } else if (Character.isDigit(c)) {
 
-                    
-
-                    while ('0123456789'.contains(c.toString())) {
-                    	state = 4;
-                        pos++;
-                    } 
-                    if (character.isDigit(',')){
-                    	state = 5;
-                    	pos++;
-                    } //else if (character.isLetter)
-                     
-                	
-                    	break;
+                    } else if (c.equals(' ')) {
+                        results.add("NumInt");
+                        state = 0;
+                    } else {
+                        state = 13;
+                    }
+                    pos++;
+                    break;
 
                 case 5:
-                    while ('0123456789'.contains(c.toString())) {
-                	   state = 6;
-                	   pos++;
-                    }	
+                    if (Character.isDigit(c)) {
+                        state = 6;
+                    } else {
+                        state = 13;
+                    }
+                    pos++;
+
                     break;
 
                 case 6:
-                	results.add("NumReal")
+                    results.add("NumReal");
                     state = 0;
-                	pos++;
-                	break;
+                    pos++;
+                    break;
 
                 case 7:
+                    if (Character.isDigit(c) || "ABCDEF".contains(c.toString())) {
+
+                    } else if (c.equals(' ')) {
+                        results.add("NumHexa");
+                        state = 0;
+                    } else {
+                        state = 13;
+                    }
+                    pos++;
                     break;
 
                 case 8:
