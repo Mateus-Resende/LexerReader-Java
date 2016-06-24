@@ -3,7 +3,7 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/src/Exceptions/CharacterNotMappedException.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/Exceptions/StringNotClosedException.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/core/LexemeReader.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/core/TokenInput.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/core/TokenReader.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/tests/TokenTests.java" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />

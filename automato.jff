@@ -11,92 +11,59 @@
 			<x>194.0</x>
 			<y>45.0</y>
 		</state>
-		<state id="2" name="2 id">
-			<x>376.0</x>
-			<y>8.0</y>
-		</state>
-		<state id="3" name="3 id">
-			<x>613.0</x>
-			<y>27.0</y>
+		<state id="3" name="2 id">
+			<x>506.0</x>
+			<y>31.0</y>
 			<final/>
 		</state>
-		<state id="4" name="4 int">
+		<state id="4" name="3 int">
 			<x>292.0</x>
 			<y>162.0</y>
 			<final/>
 		</state>
-		<state id="5" name="5">
-			<x>406.0</x>
-			<y>93.0</y>
+		<state id="5" name="4">
+			<x>397.0</x>
+			<y>110.0</y>
 		</state>
-		<state id="6" name="6 real">
-			<x>661.0</x>
-			<y>92.0</y>
+		<state id="6" name="5 real">
+			<x>525.0</x>
+			<y>118.0</y>
 			<final/>
 		</state>
-		<state id="7" name="7 hexa">
-			<x>665.0</x>
-			<y>179.0</y>
+		<state id="7" name="6 hexa">
+			<x>530.0</x>
+			<y>210.0</y>
 			<final/>
 		</state>
-		<state id="8" name="8">
-			<x>290.0</x>
-			<y>248.0</y>
+		<state id="8" name="7">
+			<x>300.0</x>
+			<y>292.0</y>
 		</state>
-		<state id="9" name="9 string">
-			<x>665.0</x>
-			<y>261.0</y>
+		<state id="9" name="8 string">
+			<x>531.0</x>
+			<y>299.0</y>
 			<final/>
 		</state>
-		<state id="10" name="10 OP">
-			<x>284.0</x>
-			<y>315.0</y>
+		<state id="10" name="9 OP">
+			<x>291.0</x>
+			<y>356.0</y>
 			<final/>
 		</state>
-		<state id="11" name="11 OP">
-			<x>281.0</x>
-			<y>376.0</y>
+		<state id="11" name="10 OP">
+			<x>277.0</x>
+			<y>414.0</y>
 			<final/>
 		</state>
-		<state id="12" name="12 OP">
-			<x>451.0</x>
-			<y>378.0</y>
+		<state id="12" name="11 OP">
+			<x>531.0</x>
+			<y>428.0</y>
 			<final/>
 		</state>
 		<!--The list of transitions.-->
 		<transition>
-			<from>0</from>
-			<to>10</to>
-			<controlx>154</controlx>
-			<controly>267</controly>
-			<read>+=-&amp;%/|</read>
-		</transition>
-		<transition>
 			<from>4</from>
 			<to>5</to>
 			<read>virgula</read>
-		</transition>
-		<transition>
-			<from>4</from>
-			<to>7</to>
-			<read>A+B+C+D+E+F</read>
-		</transition>
-		<transition>
-			<from>0</from>
-			<to>4</to>
-			<read>digito</read>
-		</transition>
-		<transition>
-			<from>7</from>
-			<to>7</to>
-			<controlx>665</controlx>
-			<controly>123</controly>
-			<read>digito+A+B+C+D+E+F</read>
-		</transition>
-		<transition>
-			<from>5</from>
-			<to>6</to>
-			<read>digito</read>
 		</transition>
 		<transition>
 			<from>8</from>
@@ -104,19 +71,11 @@
 			<read>"</read>
 		</transition>
 		<transition>
-			<from>3</from>
-			<to>3</to>
-			<read>letra+_+digito</read>
-		</transition>
-		<transition>
-			<from>0</from>
-			<to>1</to>
-			<read>$</read>
-		</transition>
-		<transition>
-			<from>11</from>
-			<to>12</to>
-			<read>*</read>
+			<from>7</from>
+			<to>7</to>
+			<controlx>520</controlx>
+			<controly>138</controly>
+			<read>digito+A+B+C+D+E+F</read>
 		</transition>
 		<transition>
 			<from>0</from>
@@ -126,21 +85,67 @@
 			<read>*</read>
 		</transition>
 		<transition>
-			<from>8</from>
-			<to>8</to>
-			<read>char</read>
+			<from>0</from>
+			<to>10</to>
+			<controlx>154</controlx>
+			<controly>267</controly>
+			<read>+=-&amp;%/|</read>
 		</transition>
 		<transition>
-			<from>2</from>
+			<from>5</from>
+			<to>6</to>
+			<read>digito</read>
+		</transition>
+		<transition>
+			<from>3</from>
 			<to>3</to>
-			<controlx>486</controlx>
-			<controly>-14</controly>
-			<read>letra+digito+_</read>
+			<read>letra+_+digito</read>
+		</transition>
+		<transition>
+			<from>11</from>
+			<to>12</to>
+			<read>*</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>7</to>
+			<controlx>304</controlx>
+			<controly>296</controly>
+			<read>A+B+C+D+E+F</read>
+		</transition>
+		<transition>
+			<from>1</from>
+			<to>3</to>
+			<controlx>316</controlx>
+			<controly>6</controly>
+			<read>Letra+digito+_</read>
 		</transition>
 		<transition>
 			<from>0</from>
 			<to>8</to>
 			<read>"</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>1</to>
+			<read>$</read>
+		</transition>
+		<transition>
+			<from>4</from>
+			<to>7</to>
+			<read>A+B+C+D+E+F</read>
+		</transition>
+		<transition>
+			<from>8</from>
+			<to>8</to>
+			<controlx>302</controlx>
+			<controly>245</controly>
+			<read>char</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>4</to>
+			<read>digito</read>
 		</transition>
 		<transition>
 			<from>4</from>
@@ -151,11 +156,6 @@
 			<from>6</from>
 			<to>6</to>
 			<read>digito</read>
-		</transition>
-		<transition>
-			<from>1</from>
-			<to>2</to>
-			<read>letra</read>
 		</transition>
 	</automaton>
 </structure>

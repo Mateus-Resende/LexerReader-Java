@@ -8,6 +8,11 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * @author Mateus A. M. Resende
+ * @author Matheus G. Silva
+ * @author Wilson Q. Rocha
+ */
 public class TokenTests {
     private TokenReader t = null;
 
@@ -46,6 +51,14 @@ public class TokenTests {
     public void testIdEndsWithUnderscore() throws Exception {
         String expected = "[ID]";
         String actual = t.read("$a_");
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testIdSingleChar() throws Exception {
+        String expected = "[ID]";
+        String actual = t.read("$a");
 
         assertEquals(expected, actual);
     }
@@ -236,7 +249,12 @@ public class TokenTests {
 
     @Test(expected = CharacterNotMappedException.class)
     public void testWrongLetterForHexa() throws CharacterNotMappedException, StringNotClosedException {
-        t.read("ABGCEDF");
+        t.read("ABCEDFG");
+    }
+
+    @Test(expected = CharacterNotMappedException.class)
+    public void testThreeStars() throws CharacterNotMappedException, StringNotClosedException {
+        t.read("$bla = 234A *** ble");
     }
 
     @Test(expected = CharacterNotMappedException.class)
