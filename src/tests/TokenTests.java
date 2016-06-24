@@ -9,7 +9,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class TokenTests {
-    TokenReader t = null;
+    private TokenReader t = null;
 
     @Before
     public void setup() {
@@ -188,7 +188,7 @@ public class TokenTests {
 
         assertEquals(expected, actual);
     }
-    
+
     @Test
     public void testMultipleTokens() throws CharacterNotMappedException, StringNotClosedException {
         String expected = "[Cadeia, Op, NumInt, Op, ID, Op, NumHex]";
@@ -199,30 +199,48 @@ public class TokenTests {
 
     @Test(expected = CharacterNotMappedException.class)
     public void testMultipleTokens2() throws CharacterNotMappedException, StringNotClosedException {
-        t.read("$89");
+        t.read("$ A3s");
     }
-    
+
     @Test
     public void testMultipleStars() throws CharacterNotMappedException, StringNotClosedException {
-    	String expected = "[Op, NumReal, Op]";
+        String expected = "[Op, NumReal, Op]";
         String actual = t.read("= 5,6**");
 
         assertEquals(expected, actual);
     }
-    
+
     @Test
     public void testMultipleTokens3() throws CharacterNotMappedException, StringNotClosedException {
-    	String expected = "[ID, Op, NumReal, Op, NumHex, Op, NumInt, Op, Cadeia, Op, NumInt]";
+        String expected = "[ID, Op, NumReal, Op, NumHex, Op, NumInt, Op, Cadeia, Op, NumInt]";
         String actual = t.read("$valor = 5,6**          1B + 324 + \"Goku\"%1");
 
         assertEquals(expected, actual);
     }
-    
+
     @Test
     public void testMultipleTokens4() throws CharacterNotMappedException, StringNotClosedException {
-    	String expected = "[Op, Cadeia, Op, NumInt]";
+        String expected = "[Op, Cadeia, Op, NumInt]";
         String actual = t.read("+ \"Goku\"%1");
 
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testMultipleTokens5() throws CharacterNotMappedException, StringNotClosedException {
+        String expected = "[NumHex]";
+        String actual = t.read("ABCEDF");
+
+        assertEquals(expected, actual);
+    }
+
+    @Test(expected = CharacterNotMappedException.class)
+    public void testWrongLetterForHexa() throws CharacterNotMappedException, StringNotClosedException {
+        t.read("ABGCEDF");
+    }
+
+    @Test(expected = CharacterNotMappedException.class)
+    public void testWrongLetterForHexa2() throws CharacterNotMappedException, StringNotClosedException {
+        t.read("abcdef");
     }
 }
