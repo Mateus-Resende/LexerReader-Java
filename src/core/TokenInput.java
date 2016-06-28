@@ -17,10 +17,10 @@ import Exceptions.StringNotClosedException;
 public class TokenInput {
     public static void main(String[] args) throws Exception {
         TokenReader t = new TokenReader();
-
+        TokenReaderRegex r = new TokenReaderRegex();
         try {
             System.out.println(t.read("'& $asdf = * ** \"tudo+/-0certo\""));
-
+            System.out.println(r.read("'& $asdf = * ** \"tudo+/-0certo\""));
         } catch (CharacterNotMappedException e) {
             System.out.println(e.getMessage());
 
