@@ -32,12 +32,12 @@ public class Lexer {
                 tokens.add(new Token(TokenType.ID, matcher.group(TokenType.ID.name())));
             else if (matcher.group(TokenType.OP.name()) != null)
                 tokens.add(new Token(TokenType.OP, matcher.group(TokenType.OP.name())));
-            else if (matcher.group(TokenType.NUM_REAL.name()) != null)
-                tokens.add(new Token(TokenType.NUM_REAL, matcher.group(TokenType.NUM_REAL.name())));
-            else if (matcher.group(TokenType.NUM_HEX.name()) != null)
-                tokens.add(new Token(TokenType.NUM_HEX, matcher.group(TokenType.NUM_HEX.name())));
-            else if (matcher.group(TokenType.NUM_INT.name()) != null)
-                tokens.add(new Token(TokenType.NUM_INT, matcher.group(TokenType.NUM_INT.name())));
+            else if (matcher.group(TokenType.NUMREAL.name()) != null)
+                tokens.add(new Token(TokenType.NUMREAL, matcher.group(TokenType.NUMREAL.name())));
+            else if (matcher.group(TokenType.NUMHEX.name()) != null)
+                tokens.add(new Token(TokenType.NUMHEX, matcher.group(TokenType.NUMHEX.name())));
+            else if (matcher.group(TokenType.NUMINT.name()) != null)
+                tokens.add(new Token(TokenType.NUMINT, matcher.group(TokenType.NUMINT.name())));
             else if (matcher.group(TokenType.STRING.name()) != null)
                 tokens.add(new Token(TokenType.STRING, matcher.group(TokenType.STRING.name())));
         return tokens;
