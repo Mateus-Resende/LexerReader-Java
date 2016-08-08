@@ -40,11 +40,12 @@ public class Lexer {
                 tokens.add(new Token(TokenType.NUMINT, matcher.group(TokenType.NUMINT.name())));
             else if (matcher.group(TokenType.STRING.name()) != null)
                 tokens.add(new Token(TokenType.STRING, matcher.group(TokenType.STRING.name())));
+           
         return tokens;
     }
 
     public static void main(String[] args) throws Exception {
-        String input = "& $asdf= * *$bla* ";
+        String input = "& $asdf= ** 1AF382 $9 *$bla* ";
 
         List<Token> tokens = lex(input);
         tokens.forEach(token -> System.out.println(token));
